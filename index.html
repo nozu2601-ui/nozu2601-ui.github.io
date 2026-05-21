@@ -151,17 +151,24 @@
 
         /* --- 7. コンテンツ固有のレイアウト調整 --- */
         /* 概要（プロフィール）のレイアウト */
+        /* 概要（プロフィール）のレイアウト */
         .profile-layout {
             display: flex;
             gap: 40px;
             align-items: center;
-            margin-top: 10px;
+            justify-content: center; /* 横方向の中央寄せ */
+            margin: 10px auto 0 auto;/* 左右のマージンをautoにして全体を中央へ */
+            width: fit-content;      /* 横幅をコンテンツにぴったり合わせる */
         }
         .profile-avatar img {
             width: 180px;
             height: auto;
             border: 2px solid #222;
             border-radius: 8px;
+            display: block;          /* 余計な隙間を排除 */
+        }
+        .profile-details {
+            text-align: left;        /* テキスト自体は左揃えにして読みやすさを維持 */
         }
         .profile-details h2 {
             font-size: 2.2rem;
@@ -178,7 +185,6 @@
             font-weight: 700;
             text-decoration: none;
         }
-
         /* 自己紹介のプレーンテキスト */
         .intro-text {
             font-size: 1.2rem;
