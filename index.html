@@ -1,0 +1,504 @@
+<!doctype html> 
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>野津拓未 - Homepage</title>
+
+    <meta property="og:locale" content="ja">
+    <meta property="og:site_name" content="野津　拓未">
+    <meta property="og:title" content="野津　拓未">
+    <meta property="og:url" content="http://localhost:4000/">
+    <meta property="og:description" content="2008/01/13生まれ 情報科学部情報科学科所属">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. 全体設定と方眼紙（グリッド）背景 --- */
+        body {
+            margin: 0;
+            padding: 40px 0 100px 0;
+            font-family: 'Noto Sans JP', sans-serif;
+            color: #111;
+            background-color: #f5f5f5;
+            /* 薄いグレーのグリッド線 */
+            background-image: 
+                linear-gradient(#e0e0e0 1px, transparent 1px),
+                linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
+            background-size: 35px 35px;
+            scroll-behavior: smooth;
+        }
+
+        /* --- 2. 右側固定のマゼンタピンク目次 --- */
+        .sakurai-nav {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 6px solid #ff00aa; /* 特徴的なマゼンタ */
+            padding: 20px 25px;
+            background-color: #fff;
+            z-index: 999;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .sakurai-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sakurai-nav li {
+            margin-bottom: 10px;
+            font-weight: 900;
+            font-size: 1.05rem;
+        }
+        .sakurai-nav li:last-child {
+            margin-bottom: 0;
+        }
+        .sakurai-nav a {
+            color: #888;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            transition: color 0.2s;
+        }
+        .sakurai-nav a:hover {
+            color: #111;
+        }
+        /* ホバーした時に現在地を示す三角マークを出す演出 */
+        .sakurai-nav a:hover::before {
+            content: "?";
+            position: absolute;
+            left: -18px;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        /* --- 3. スライド（キャンバス）の共通設定 --- */
+        .sakurai-slide {
+            background-color: #ffffff;
+            border: 2px solid #222;
+            max-width: 900px;
+            margin: 0 auto 80px auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0px 15px 35px rgba(0,0,0,0.1);
+            padding: 60px 50px 90px 50px; /* 下部テロップ分の余白 */
+            box-sizing: border-box;
+        }
+
+        /* --- 4. 右上の斜めリボン（見出し） --- */
+        .slide-ribbon {
+            position: absolute;
+            top: 0;
+            right: -15px;
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 8px 45px 8px 30px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            transform: skewX(-25deg);
+            border-bottom: 4px solid #e60012; /* 赤いライン */
+            border-left: 4px solid #e60012;
+            letter-spacing: 0.05em;
+        }
+        .slide-ribbon span {
+            display: block;
+            transform: skewX(25deg); /* 文字の傾きを元に戻す */
+        }
+
+        /* --- 5. スライド内のヘッダー（タイトルと赤線） --- */
+        .slide-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        .slide-title {
+            font-size: 3.8rem;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: 0.05em;
+            color: #000;
+        }
+        .slide-line {
+            width: 100%;
+            height: 4px;
+            background-color: #b30000; /* 濃い赤 */
+            margin: 12px 0;
+        }
+        .slide-subtitle {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #444;
+            margin: 0;
+        }
+
+        /* --- 6. 各スライド下部の黒いテロップ帯 --- */
+        .slide-ticker {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #2b2b2b;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            border-top: 1px solid #111;
+            box-shadow: inset 0px 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* --- 7. コンテンツ固有のレイアウト調整 --- */
+        /* 概要（プロフィール）のレイアウト */
+        .profile-layout {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .profile-avatar img {
+            width: 180px;
+            height: auto;
+            border: 2px solid #222;
+            border-radius: 8px;
+        }
+        .profile-details h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin: 0 0 15px 0;
+        }
+        .profile-details p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin: 6px 0;
+        }
+        .profile-details a {
+            color: #b30000;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* 自己紹介のプレーンテキスト */
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            font-weight: 500;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* 経歴タイムライン */
+        .timeline {
+            border-left: 3px solid #222;
+            padding-left: 25px;
+            margin-left: 15px;
+            list-style: none;
+        }
+        .timeline-item {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -32px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            background-color: #b30000;
+            border: 2px solid #fff;
+            border-radius: 50%;
+        }
+        .timeline-date {
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: #b30000;
+            margin-bottom: 4px;
+        }
+        .timeline-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 5px;
+        }
+
+        /* 作品セクション */
+        .works-container {
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        .works-container h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+        .works-container img {
+            border: 2px solid #222;
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+        }
+        .works-credits {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: left;
+            background: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+
+        /* 布教（グリッド状にきれいに並べる） */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0;
+            list-style: none;
+        }
+        .mission-grid li {
+            background: #f9f9f9;
+            border: 1px solid #333;
+            padding: 12px 18px;
+            font-weight: 700;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .mission-grid li:hover {
+            transform: translateY(-2px);
+            background: #fff;
+            border-color: #b30000;
+        }
+        .mission-grid a {
+            color: #111;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* クイズ（中央寄せ） */
+        .quiz-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* フッター */
+        .site-footer {
+            text-align: center;
+            padding: 30px 0;
+            font-weight: 700;
+            color: #666;
+        }
+
+        /* --- 8. レスポンシブ（スマホ対応） --- */
+        @media (max-width: 1100px) {
+            .sakurai-nav {
+                position: static;
+                transform: none;
+                width: fit-content;
+                margin: 0 auto 40px auto;
+            }
+            .sakurai-slide {
+                margin: 0 15px 40px 15px;
+                padding: 50px 20px 80px 20px;
+            }
+            .slide-title {
+                font-size: 2.5rem;
+            }
+            .profile-layout {
+                flex-direction: column;
+                text-align: center;
+            }
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
+            .slide-ticker {
+                font-size: 1.1rem;
+                padding: 12px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="sakurai-nav">
+        <ul>
+            <li><a href="#about-me">概要</a></li>
+            <li><a href="#career">経歴</a></li>
+            <li><a href="#works">作品</a></li>
+            <li><a href="#mission">布教</a></li>
+            <li><a href="#quiz">クイズ</a></li>
+        </ul>
+    </nav>
+
+
+    <div class="sakurai-slide" id="about-me">
+        <div class="slide-ribbon"><span>野津 拓未のホームページ</span></div>
+        
+        <div class="slide-header">
+            <h1 class="slide-title">概要</h1>
+            <div class="slide-line"></div>
+            <p class="slide-subtitle">Concept</p>
+        </div>
+
+        <div class="profile-layout">
+            <div class="profile-avatar">
+                <img src="images/myface.png" alt="野津拓未の顔写真">
+            </div>
+            <div class="profile-details">
+                <h2>野津 拓未 <span style="font-size:1.2rem; color:#666; font-weight:700;">(Takumi Nozu)</span></h2>
+                <p><strong>所属：</strong>広島大学 情報科学部情報科学科 08</p>
+                <p><strong>サークル：</strong><a href="https://hu-gsd.com/" target="_blank" rel="noopener noreferrer">ゲーム制作同好会</a> に所属</p>
+                <p><strong>ハンドルネーム：</strong>おーたむ.izok</p>
+                <p><strong>居住地：</strong>広島県 東広島市（2008年広島市生まれ）</p>
+                <p><strong>連絡先：</strong><a href="mailto:b261426@hiroshima-u.ac.jp">b261426@hiroshima-u.ac.jp</a></p><br>
+            </div>
+        </div>
+
+        <div class="slide-ticker">
+            インターネットとゲームが大好きなコミュ障<br>
+            マイペースで落ち着いているとよく言われる
+        </div>
+    </div>
+
+
+    <div class="sakurai-slide" id="career">
+        <div class="slide-ribbon"><span>人生の軌跡</span></div>
+        
+        <div class="slide-header">
+            <h1 class="slide-title">経歴</h1>
+            <div class="slide-line"></div>
+            <p class="slide-subtitle">Career</p>
+        </div>
+
+        <div class="intro-text">
+            <br>
+            
+        </div>
+
+        <ul class="timeline">
+            <li class="timeline-item">
+                <div class="timeline-date">2008年</div>
+                <div class="timeline-content">1月13日、広島県広島市にて生まれる。</div>
+            </li>
+            <li class="timeline-item">
+                <div class="timeline-date">2014年</div>
+                <div class="timeline-content">広島市立宇品小学校に進学。</div>
+            </li>
+            <li class="timeline-item">
+                <div class="timeline-date">2020年</div>
+                <div class="timeline-content">広島市立宇品中学校に進学。</div>
+                <div class="timeline-content">幽霊部員として水泳部に所属。</div>
+            </li>
+            <li class="timeline-item">
+                <div class="timeline-date">2023年</div>
+                <div class="timeline-content">広島市立舟入高等学校に進学。</div>
+                <div class="timeline-content">電子工学部(実質パソコン部)に所属。</div>
+            </li>
+            <li class="timeline-item">
+                <div class="timeline-date">2026年</div>
+                <div class="timeline-content">広島大学情報科学部に進学。東広島市にて一人暮らしを始める。</div>
+                <div class="timeline-content">ゲーム制作同好会に所属。</div>
+            </li>
+        </ul>
+
+        <div class="slide-ticker">
+            そして今に至る。
+        </div>
+    </div>
+
+
+    <div class="sakurai-slide" id="works">
+        <div class="slide-ribbon"><span>ゲーム開発の経験</span></div>
+        
+        <div class="slide-header">
+            <h1 class="slide-title">作品</h1>
+            <div class="slide-line"></div>
+            <p class="slide-subtitle">Work</p>
+        </div>
+
+        <div class="works-container">
+            <h2>CHIKIN THE ESCAPE</h2>
+            <p>
+                高校時代に作ったゲーム。使用したのは<a href="https://silversecond.com/WolfRPGEditor/" target="_blank" rel="noopener noreferrer" style="color:#b30000; font-weight:700; text-decoration:none;">WOLF RPGエディター</a>。<br>
+                追いかけてくる敵から逃げながら脱出のための鍵を探すアクションゲーム。<br>
+                敵が壁を貫通して追いかけてくる点には目をつぶってほしい。
+            </p>
+            
+            <img src="images/chikin.jpg" alt="CHIKIN THE ESCAPE ゲーム画面">
+
+            <div class="works-credits">
+                <strong>【素材・ツールクレジット】</strong><br>
+                ・制作ツール：WOLF RPGエディター<br>
+                ・編集ツール：canva<br>
+                ・run PNG designed by from <a href="https://pngtree.com/freepng/running-chiken_7425998.html?sol=downref&id=bef" target="_blank" rel="noopener noreferrer">pngtree.com</a><br>
+                ・背景素材「森」 <a href="https://booth.pm/ja/items/3029675" target="_blank" rel="noopener noreferrer">booth.pm/ja/items/3029675</a>
+            </div>
+        </div>
+
+        <div class="slide-ticker">
+            お、これはよさげですね。
+        </div>
+    </div>
+
+
+    <div class="sakurai-slide" id="mission">
+        <div class="slide-ribbon"><span>おすすめコンテンツ</span></div>
+        
+        <div class="slide-header">
+            <h1 class="slide-title">布教</h1>
+            <div class="slide-line"></div>
+            <p class="slide-subtitle">Mission</p>
+        </div>
+
+        <ul class="mission-grid">
+            <li><a href="https://genshin.hoyoverse.com/" target="_blank" rel="noopener noreferrer">原神（Genshin Impact）</a></li>
+            <li><a href="https://gakuen.idolmaster-official.jp/" target="_blank" rel="noopener noreferrer">学園アイドルマスター</a></li>
+            <li><a href="https://www.minecraft.net/" target="_blank" rel="noopener noreferrer">Minecraft</a></li>
+            <li><a href="https://www.ea.com/ja/games/apex-legends/apex-legends" target="_blank" rel="noopener noreferrer">Apex Legends</a></li>
+            <li><a href="https://undertale.jp/" target="_blank" rel="noopener noreferrer">UNDER TALE</a></li>
+            <li><a href="https://www.nintendo.com/jp/switch/ampna/index.html" target="_blank" rel="noopener noreferrer">ピクミン3デラックス</a></li>
+            <li><a href="https://p5r.jp/" target="_blank" rel="noopener noreferrer">ペルソナ5ザ・ロイヤル</a></li>
+            <li><a href="https://youtube.com/@OtonoseKanade" target="_blank" rel="noopener noreferrer">Kanade Ch. 音乃瀬奏 ‐ ReGLOSS</a></li>
+            <li><a href="https://www.youtube.com/@HoshikawaSara" target="_blank" rel="noopener noreferrer">星川サラ / Sara Hoshikawa</a></li>
+            <li><a href="https://www.youtube.com/@レグルシュライオンハートCh" target="_blank" rel="noopener noreferrer">レグルシュ・ライオンハートCh</a></li>
+            <li><a href="https://www.youtube.com/@KIYOisGOD" target="_blank" rel="noopener noreferrer">キヨ。</a></li>
+            <li><a href="https://www.youtube.com/@Ryobow_24y/" target="_blank" rel="noopener noreferrer">りょうぼー【ゲーム企画】</a></li>
+            <li><a href="https://youtube.com/@yurucom" target="_blank" rel="noopener noreferrer">ゆるコンピュータ科学ラジオ</a></li>
+	    <li><a href="https://www.youtube.com/@sora_sakurai_jp" target="_blank" rel="noopener noreferrer">桜井政博のゲーム作るには</a></li>
+        </ul>
+
+
+        <div class="slide-ticker">
+            気になったらぜひチェックしてみて欲しい。
+        </div>
+    </div>
+
+
+    <div class="sakurai-slide" id="quiz">
+        <div class="slide-ribbon"><span>お楽しみ要素</span></div>
+        
+        <div class="slide-header">
+            <h1 class="slide-title">クイズ</h1>
+            <div class="slide-line"></div>
+            <p class="slide-subtitle">Quiz</p>
+        </div>
+
+        <div class="quiz-container">
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc1Kz_Tz77J_AXmR-uBd10uMrSTjo4433S9yjvnIlpjWdTjng/viewform?embedded=true" width="640" height="382" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
+        </div>
+
+        <div class="slide-ticker">
+            Thank you for reading!!
+        </div>
+    </div>
+
+
+    <footer class="site-footer">
+        <p>&copy; 2026 野津 拓未. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
